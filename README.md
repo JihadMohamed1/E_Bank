@@ -21,8 +21,8 @@ Ce projet est une application de gestion de comptes bancaires réalisée avec Sp
 Le projet est divisé en deux parties : le backend développé avec Spring Boot et le frontend développé avec Angular. Cette architecture permet une séparation claire des responsabilités et favorise la scalabilité et la maintenabilité de l'application.
 
 ## Diagrammes
-- [Diagramme de Classe](diagrams/class_diagram.jpg)
-- [Diagramme d'Architecture](diagrams/architecture_diagram.jpg)
+- [Diagramme de Classe](Z_Rapport_Diagrams/diagrams/class_diagram.jpg)
+- [Diagramme d'Architecture](Z_Rapport_Diagrams/diagrams/architecture_diagram.jpg)
 
 
 
