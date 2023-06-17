@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BankAccountRestAPI {
     private BankAccoutService bankAccountService;
 
@@ -25,6 +25,7 @@ public class BankAccountRestAPI {
     public List<BankAccountDTO> listAccounts(){
         return bankAccountService.bankAccountList();
     }
+
     @GetMapping("/accounts/{accountId}/operations")
     public List<AccountOperationDTO> getHistory(@PathVariable String accountId){
         return bankAccountService.accountHistory(accountId);

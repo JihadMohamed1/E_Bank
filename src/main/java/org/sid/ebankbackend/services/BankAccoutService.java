@@ -1,6 +1,7 @@
 package org.sid.ebankbackend.services;
 
 import org.sid.ebankbackend.dtos.*;
+import org.sid.ebankbackend.entities.BankAccount;
 import org.sid.ebankbackend.exceptions.BalanceNotSufficientException;
 import org.sid.ebankbackend.exceptions.BankAccountNotFoundException;
 import org.sid.ebankbackend.exceptions.CustomerNotFoundException;
@@ -22,13 +23,17 @@ public interface BankAccoutService {
 
     List<BankAccountDTO> bankAccountList();
 
+    List<BankAccountDTO> bankAccountListCostumer(Long customerId) throws CustomerNotFoundException;
+
     CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException;
 
     CustomerDTO updateCustomer(CustomerDTO customerDTO);
 
     void deleteCustomer(Long customerId);
 
+
     List<AccountOperationDTO> accountHistory(String accountId);
+
 
     AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException;
 

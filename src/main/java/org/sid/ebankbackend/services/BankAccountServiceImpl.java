@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.awt.print.Pageable;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -153,6 +154,9 @@ public class BankAccountServiceImpl implements  BankAccoutService{
         }).collect(Collectors.toList());
         return bankAccountDTOS;
     }
+
+
+
     @Override
     public CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException {
         Customer customer = customerRepository.findById(customerId)
@@ -171,11 +175,34 @@ public class BankAccountServiceImpl implements  BankAccoutService{
     public void deleteCustomer(Long customerId){
         customerRepository.deleteById(customerId);
     }
+
+
+
     @Override
     public List<AccountOperationDTO> accountHistory(String account){
         List<AccountOperation> accountOperations = accountOperationRepository.findByBankAccountId(account);
         return accountOperations.stream().map(op->dtoMapper.fromAccountOperation(op)).collect(Collectors.toList());
     }
+
+
+    @Override
+    public List<BankAccountDTO> bankAccountListCostumer(Long customerId) throws CustomerNotFoundException {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer Not found"));
+        List<BankAccount> bankAccounts = bankAccountRepository.findByCustomer(Optional.ofNullable(customer));
+
+        List<BankAccountDTO> bankAccountDTOS = bankAccounts.stream().map(bankAccount -> {
+            if (bankAccount instanceof SavingAccount) {
+                SavingAccount savingAccount = (SavingAccount) bankAccount;
+                return dtoMapper.fromSavingBankAccount(savingAccount);
+            } else {
+                CurrentAccount currentAccount = (CurrentAccount) bankAccount;
+                return dtoMapper.fromCurrentBankAccount(currentAccount);
+            }
+        }).collect(Collectors.toList());
+        return bankAccountDTOS;}
+
+
 
     @Override
     public AccountHistoryDTO getAccountHistory(String account, int page, int size) throws BankAccountNotFoundException {
